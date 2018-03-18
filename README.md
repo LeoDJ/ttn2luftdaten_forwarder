@@ -1,7 +1,8 @@
+Forked from [cinezaster/ttn2luftdaten_forwarder](https://github.com/Cinezaster/ttn2luftdaten_forwarder).
 # ttn2luftdaten_forwarder
-forwards data from ttn nodes to luftdaten and madavi.
+Forwards data from ttn nodes to luftdaten and madavi.
 
-[On docker hub](https://hub.docker.com/r/cinezaster/ttn2luftdaten_forwarder/)
+[On docker hub](https://hub.docker.com/r/leodj/ttn2luftdaten_forwarder/)
 
 ## Requirements
 1. Knowledge how to work with docker and have it installed.
@@ -12,10 +13,28 @@ forwards data from ttn nodes to luftdaten and madavi.
 ``` {"pm10":19,"pm25":18,"temperature":16,"humidity":74}```
 temperature and humidity are not required. You can achief this by writing a decoder function at this page: https://console.thethingsnetwork.org/applications/###yourapplicationID###/payload-formats that returns an object with the given properties.
 
+### TTN Decoder example
+When using a struct like described in the [opendataHN LoRa_Feinstaub code](https://github.com/opendata-heilbronn/Lora/blob/master/LoRa_Feinstaub_SDS011/src/main.cpp#L12).
+
+The TTN Decoder code: [GitHub Gist](https://gist.github.com/LeoDJ/441c4e6678a568afe1e165d80c58f3f6).
+
 ### Run
 Fill in the xxx parts
+#### Docker Run Command
 ```
-docker run --env appID=xxx --env accessKey=xxx  --env prefix=xxx cinezaster/ttn2luftdaten_forwarder:latest
+docker run --env appID=xxx --env accessKey=xxx  --env prefix=xxx leodj/ttn2luftdaten_forwarder:latest
+```
+#### Docker Compose
+```
+version: '3'
+services:
+    ttn2luftdaten_forwarder:
+        environment:
+            - appID=xxx
+            - accessKey=xxx
+            - prefix=xxx
+        image: 'leodj/ttn2luftdaten_forwarder:latest'
 ```
 
-I run it via docker cloud on a digital ocean node
+## Luftdaten API "documentation"
+The so called "documentation" for the Luftdaten API can be found [here](https://github.com/opendata-stuttgart/meta/wiki/APIs).
